@@ -83,7 +83,7 @@ func (cc *CastController) DeleteCast(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Invalid movie id"})
 		return
 	}
-	
+
 	err = cc.CastService.DeleteCast(&movieId)
 
 	if err != nil {

@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"math"
 	"gotest/constants"
 	"gotest/models"
 	"gotest/services/interfaces"
+	"math"
 	"net/http"
 	"strconv"
 
@@ -166,9 +166,9 @@ func (mc *MovieDiscussionController) GetMovieDiscussionInPage(ctx *gin.Context) 
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"discussions": movies,
-		"page": pageNumber,
-		"page_size": discussionPerPage,
-		"total_page": math.Ceil(float64(total_movies) / float64(discussionPerPage)),
+		"page":        pageNumber,
+		"page_size":   discussionPerPage,
+		"total_page":  math.Ceil(float64(total_movies) / float64(discussionPerPage)),
 	})
 }
 
