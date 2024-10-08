@@ -1,6 +1,6 @@
 package constants
 
-const MOVIES_PER_PAGE = 20
+const MOVIES_PER_PAGE = 24
 const USERID_FOR_TESTING = 20000
 const DISCUSSION_PER_PAGE = int(20)
 const MOVIE_JSON_FOR_TESTING_POPULAR = `[

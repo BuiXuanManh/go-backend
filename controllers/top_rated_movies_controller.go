@@ -39,8 +39,7 @@ func (tc *TopRatedMoviesController) CreateTopRatedMovies(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	str := &id
-	avg, err := tc.RatingMoviesService.GetAverageRating(str)
+	avg, err := tc.RatingMoviesService.GetAverageRating(&id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -52,7 +51,13 @@ func (tc *TopRatedMoviesController) CreateTopRatedMovies(ctx *gin.Context) {
 	}
 	if topRatedMovies != nil {
 		topRatedMovies.VoteAvg = avg
-		err = tc.TopRatedMoviesService.UpdateTopRatedMovies(topRatedMovies)
+		err = tc.TopRatedMoviesService.UpdateTopRatedMovies(&models.TopRatedMovies{
+			VoteAvg:     avg,
+			MovieId:     id,
+			ReleaseDate: movies.ReleaseDate,
+			PosterPath:  movies.PosterPath,
+			Title:       movies.Title,
+		})
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

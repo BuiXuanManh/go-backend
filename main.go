@@ -136,7 +136,7 @@ func Init() {
 
 	leaderboardCollection = mongoClient.Database(databaseName).Collection("leaderboard")
 	leaderboardService = implementations.NewLeaderboardService(leaderboardCollection, ctx)
-	leaderboardController = controllers.NewLeaderboardController(leaderboardService, userService, movieService)
+	leaderboardController = controllers.NewLeaderboardController(leaderboardService, userService, movieService, ratingService)
 
 	topRatedMoviesCollection = mongoClient.Database(databaseName).Collection("top_rated_movies")
 	topRatedMoviesService = implementations.NewTopRatedMoviesService(topRatedMoviesCollection, ctx)

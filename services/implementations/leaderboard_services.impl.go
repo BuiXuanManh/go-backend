@@ -16,9 +16,9 @@ type LeaderboardServiceImpl struct {
 }
 
 // FindLeaderboard implements interfaces.LeaderboardServices.
-func (l *LeaderboardServiceImpl) FindLeaderboard(movie_id *int, user_id *int) (*models.Leaderboard, error) {
+func (l *LeaderboardServiceImpl) FindLeaderboard(user_id *int) (*models.Leaderboard, error) {
 	var leaderboard models.Leaderboard
-	filter := bson.M{"movie_id": movie_id, "user_id": user_id}
+	filter := bson.M{"user_id": user_id}
 	err := l.leaderboardCollection.FindOne(l.ctx, filter).Decode(&leaderboard)
 	if err == mongo.ErrNoDocuments {
 		// Nếu không tìm thấy tài liệu, trả về nil mà không dừng chương trình
@@ -40,8 +40,8 @@ func (l *LeaderboardServiceImpl) CreateLeaderboard(new *models.Leaderboard) erro
 }
 
 // UpdateLeaderboard implements interfaces.LeaderboardServices.
-func (l *LeaderboardServiceImpl) UpdateLeaderboard(lboard *models.Leaderboard, movie_id *int, user_id *int) error {
-	filter := bson.M{"movie_id": movie_id, "user_id": user_id}
+func (l *LeaderboardServiceImpl) UpdateLeaderboard(lboard *models.Leaderboard, user_id *int) error {
+	filter := bson.M{"user_id": user_id}
 	update := bson.M{"$set": bson.M{"movies_rated": lboard.MoviesRated}}
 	_, err := l.leaderboardCollection.UpdateOne(l.ctx, filter, update)
 	if err != nil {
