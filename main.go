@@ -136,11 +136,11 @@ func Init() {
 
 	leaderboardCollection = mongoClient.Database(databaseName).Collection("leaderboard")
 	leaderboardService = implementations.NewLeaderboardService(leaderboardCollection, ctx)
-	leaderboardController = controllers.NewLeaderboardController(leaderboardService)
+	leaderboardController = controllers.NewLeaderboardController(leaderboardService, userService, movieService)
 
 	topRatedMoviesCollection = mongoClient.Database(databaseName).Collection("top_rated_movies")
 	topRatedMoviesService = implementations.NewTopRatedMoviesService(topRatedMoviesCollection, ctx)
-	topRatedMoviesController = controllers.NewTopRatedMoviesController(topRatedMoviesService)
+	topRatedMoviesController = controllers.NewTopRatedMoviesController(topRatedMoviesService, ratingService, movieService)
 
 	userReviewCollection = mongoClient.Database(databaseName).Collection("user_reviews")
 	userReviewService = implementations.NewUserReviewService(userReviewCollection, ctx)

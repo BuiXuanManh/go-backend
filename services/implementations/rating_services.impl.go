@@ -15,6 +15,40 @@ type RatingServiceImpl struct {
 	ctx              context.Context
 }
 
+// GetAverageRating implements interfaces.RatingService.
+func (l *RatingServiceImpl) GetAverageRating(movieId *int) (float64, error) {
+	var ratings []models.Rating
+	filter := bson.M{"movie_id": movieId}
+
+	// Truy vấn để lấy tất cả các đánh giá của phim từ collection rating
+	cursor, err := l.ratingCollection.Find(l.ctx, filter)
+	if err != nil {
+		return 0, err
+	}
+	defer cursor.Close(l.ctx)
+
+	// Lưu tất cả kết quả vào slice ratings
+	if err = cursor.All(l.ctx, &ratings); err != nil {
+		return 0, err
+	}
+
+	// Tính toán điểm trung bình từ các đánh giá
+	var sum float64
+	for _, r := range ratings {
+		sum += r.Rating
+	}
+
+	// Kiểm tra xem có đánh giá nào không, nếu không thì trả về 0
+	if len(ratings) == 0 {
+		return 0, nil
+	}
+
+	avgRating := sum / float64(len(ratings))
+	return avgRating, nil
+}
+
+// GetAverageRating implements interfaces.RatingService.
+
 func NewRatingService(ratingCollection *mongo.Collection, ctx context.Context) interfaces.RatingService {
 	return &RatingServiceImpl{
 		ratingCollection: ratingCollection,
@@ -24,6 +58,7 @@ func NewRatingService(ratingCollection *mongo.Collection, ctx context.Context) i
 
 func (r *RatingServiceImpl) CreateRating(rating *models.Rating) error {
 	_, err := r.ratingCollection.InsertOne(r.ctx, rating)
+
 	return err
 }
 

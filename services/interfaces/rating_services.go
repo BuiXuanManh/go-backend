@@ -9,4 +9,5 @@ type RatingService interface {
 	GetMovieRatingOfUser(*int, *int) (*models.Rating, error)
 	UpdateRating(*models.Rating) error
 	DeleteRating(*int, *int) error
+	GetAverageRating(*int) (float64, error)
 }

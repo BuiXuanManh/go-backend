@@ -11,4 +11,5 @@ type MovieService interface {
 	SearchMovieInPage(*string, *int, *int) ([]*models.Movie, int, error)
 	UpdateMovie(*models.Movie) error
 	DeleteMovie(*int) error
+	FindMovie(*int) (*models.Movie, error)
 }

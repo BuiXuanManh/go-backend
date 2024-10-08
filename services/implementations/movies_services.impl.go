@@ -16,6 +16,17 @@ type MovieServiceImpl struct {
 	ctx             context.Context
 }
 
+// FindMovie implements interfaces.MovieService.
+func (m *MovieServiceImpl) FindMovie(movie_id *int) (*models.Movie, error) {
+	var movie models.Movie
+	filter := bson.M{"id": movie_id}
+	err := m.movieCollection.FindOne(m.ctx, filter).Decode(&movie)
+	if err != nil {
+		return nil, err
+	}
+	return &movie, nil
+}
+
 func NewMovieService(movieCollection *mongo.Collection, ctx context.Context) interfaces.MovieService {
 	return &MovieServiceImpl{
 		movieCollection: movieCollection,
