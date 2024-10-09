@@ -12,4 +12,5 @@ use MVC model.
 ## CRUD and statistics of data related to movies.
 
 create Leader Board of Users function use Gin framework
+<br>
 <img src="https://github.com/user-attachments/assets/b9fd97a5-9c08-4171-ad15-74530720009e"/>
