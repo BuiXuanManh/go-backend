@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"gotest/constants"
 	"gotest/helper"
 	"gotest/models"
 	"gotest/services/interfaces"
@@ -37,10 +36,6 @@ func (uc *UserController) CreateUser(ctx *gin.Context) {
 	if user.UserId == 0 || user.Username == "" || user.PasswordHash == "" {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "wrong input structure"})
 		return
-	}
-
-	if user.UserId != constants.USERID_FOR_TESTING {
-		user.UserId = uc.UserService.GetNewUserId()
 	}
 
 	hashPassword, err := helper.HashPassword(user.PasswordHash)
